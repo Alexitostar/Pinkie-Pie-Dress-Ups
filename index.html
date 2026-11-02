@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pinkie Pie Dress Ups</title>
+    <style>
+        html, body {
+            margin:0;
+            padding:0;
+            width:100vw;
+            height:100vh;
+            overflow:hidden;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:url('mynameisperry.png?v=2') no-repeat center/100% 100% #000;
+            font-family:sans-serif;
+        }
+        #game-container {
+            width:1024px;
+            height:576px;
+            max-width:100%;
+            max-height:100%;
+            box-shadow:0 0 20px rgba(0,0,0,0.7);
+            z-index:10;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            position:relative;
+            background:transparent!important;
+        }
+        ruffle-player, ruffle-player * , .ruffle-player, #game-container * {
+            background:transparent!important;
+        }
+        .orilla-botones {
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+            z-index:9999999!important;
+        }
+        #izquierda {
+            left:15px;
+        }
+        #derecha {
+            right:15px;
+        }
+        .btn-personaje {
+            width:35px;
+            height:35px;
+            min-width:35px;
+            min-height:35px;
+            border-radius:50%;
+            border:2px solid rgba(255,255,255,0.9);
+            box-shadow:0 2px 6px rgba(0,0,0,0.5);
+            cursor:pointer;
+            transition:transform 0.1s;
+            background-size:cover;
+            background-position:center;
+            display:block;
+        }
+        .btn-personaje:active {
+            transform:scale(0.9);
+        }
+
+        /* TAMAÑO IDÉNTICO REQUERIDO: Ajustado exactamente a 800x450px */
+        .html-game-frame {
+            width: 800px;
+            height: 450px;
+            border: none;
+            background: transparent;
+            margin: auto;
+        }
+    </style>
+    <script src="ruffle.js"></script>
+</head>
+<body>
+
+    <div id="game-container"></div>
+
+    <!-- BOTONES IZQUIERDOS -->
+    <div id="izquierda" class="orilla-botones">
+        <div class="btn-personaje" style="background-image:url('2.jpg');" onclick="go('1.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('4.jpg');" onclick="go('3.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('6.jpg');" onclick="go('5.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('8.jpg');" onclick="go('7.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('B.jpg');" onclick="go('A.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('F.jpg');" onclick="go('E.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('H.jpg');" onclick="go('G.swf')"></div>
+    </div>
+
+    <!-- BOTONES DERECHOS -->
+    <div id="derecha" class="orilla-botones">
+        <div class="btn-personaje" style="background-image:url('J.jpg');" onclick="go('I.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('L.jpg');" onclick="go('K.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('N.jpg');" onclick="go('M.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('O.jpg');" onclick="go('Ñ.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('Q.jpg');" onclick="go('P.swf')"></div>
+        <div class="btn-personaje" style="background-image:url('S.jpg');" onclick="go('R.swf')"></div>
+        <!-- ÚNICO BOTÓN HTML NUEVO: EQG -->
+        <div class="btn-personaje" style="background-image:url('EQG.png');" onclick="go('https://www.hasbro.com/common/assets/html5/EquestriaGirls/MLPEG_PPslumberParty/build_20160106/index_copy.html?locale=en_US')"></div>
+    </div>
+
+    <script>
+        let ruf, pi = null, box = document.getElementById("game-container");
+        let juegoActual = "1.swf";
+
+        window.addEventListener("DOMContentLoaded", () => {
+            ruf = window.RufflePlayer.newest();
+            box.addEventListener("contextmenu", (e) => e.preventDefault(), true);
+            go(juegoActual);
+        });
+
+        function go(f) {
+            const esHTML = f.toLowerCase().includes('.html') || f.toLowerCase().includes('.htm');
+
+            if (esHTML && !navigator.onLine) {
+                alert("🛜⁉️");
+                f = "1.swf"; 
+            }
+
+            juegoActual = f;
+            box.innerHTML = ""; 
+            pi = null;
+
+            if (esHTML) {
+                let iframe = document.createElement('iframe');
+                iframe.src = f;
+                iframe.className = "html-game-frame";
+                box.appendChild(iframe);
+            } else {
+                pi = ruf.createPlayer();
+                box.appendChild(pi);
+                pi.config = {
+                    letterbox: "on",
+                    forceScale: true,
+                    wmode: "transparent",
+                    contextMenu: "off"
+                };
+                pi.load({
+                    url: f,
+                    allowScriptAccess: true,
+                    autoplay: "on",
+                    unmuteOverlay: "hidden",
+                    wmode: "transparent"
+                });
+                Object.assign(pi.style, {
+                    width: "100%",
+                    height: "100%",
+                    background: "transparent"
+                });
+                pi.onNavigateToURL = (u) => {
+                    let m = u.match(/[^/]+\.swf/i);
+                    if (m) go(m);
+                }
+            }
+        }
+
+        const audio = (act) => {
+            if (pi?.audioContext?.[act]) pi.audioContext[act]();
+            if (typeof pi?.[act === 'suspend' ? 'pause' : 'play'] === "function") pi[act === 'suspend' ? 'pause' : 'play']();
+        };
+
+        document.addEventListener("visibilitychange", () => audio(document.hidden ? "suspend" : "resume"));
+        window.addEventListener("blur", () => audio("suspend"));
+        window.addEventListener("focus", () => audio("resume"));
+    </script>
+</body>
+</html>
