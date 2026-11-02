@@ -1,0 +1,74 @@
+{
+    "buttons": [
+        {
+            "id": "158d2803-4a03-4766-9c87-bc53eb79ef49",
+            "centerX": 0.851,
+            "centerY": 0.7,
+            "width": 0.052,
+            "height": 0.11999999,
+            "color": -12303292,
+            "alpha": 180,
+            "keyCode": 66,
+            "label": "ENTER",
+            "shape": "CIRCLE",
+            "cornerRadius": 0.037,
+            "isUndeletable": false,
+            "isUnmovable": false
+        },
+        {
+            "id": "cb2d17ae-dd8d-4b1d-a2c9-1fc5230a8218",
+            "centerX": 0.927,
+            "centerY": 0.7,
+            "width": 0.052,
+            "height": 0.11999999,
+            "color": -12303292,
+            "alpha": 180,
+            "keyCode": 111,
+            "label": "ESCAPE",
+            "shape": "CIRCLE",
+            "cornerRadius": 0.037,
+            "isUndeletable": false,
+            "isUnmovable": false
+        },
+        {
+            "id": "615de944-1ca1-4ac2-b855-42be0248e252",
+            "centerX": 0.851,
+            "centerY": 0.863,
+            "width": 0.052,
+            "height": 0.11999999,
+            "color": -12303292,
+            "alpha": 180,
+            "keyCode": 54,
+            "label": "Z",
+            "shape": "CIRCLE",
+            "cornerRadius": 0.037,
+            "isUndeletable": false,
+            "isUnmovable": false
+        },
+        {
+            "id": "9af6728a-743a-4007-af3a-509cae33da38",
+            "centerX": 0.927,
+            "centerY": 0.863,
+            "width": 0.052,
+            "height": 0.11999999,
+            "color": -12303292,
+            "alpha": 180,
+            "keyCode": 30,
+            "label": "B",
+            "shape": "CIRCLE",
+            "cornerRadius": 0.037,
+            "isUndeletable": false,
+            "isUnmovable": false
+        }
+    ],
+    "joystick": {
+        "centerX": 0.1,
+        "centerY": 0.792,
+        "outerCircleRadius": 0.172,
+        "knobRadius": 0.05,
+        "alpha": 180,
+        "color": -12303292,
+        "dPadMode": true
+    },
+    "orientation": 6
+}
